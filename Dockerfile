@@ -21,6 +21,7 @@ RUN adduser --disabled-password --gecos '' gameserver \
 
 # SteamInit crash fix
 RUN mkdir -pv /home/gameserver/.steam/sdk32/ \
-    && ln -s /home/gameserver/.steam/steamcmd/linux32/steamclient.so /home/gameserver/.steam/sdk32/steamclient.so
+    && ln -s /home/gameserver/.steam/steamcmd/linux32/steamclient.so /home/gameserver/.steam/sdk32/steamclient.so \
+    && chown -R gameserver:gameserver /home/gameserver/.steam
 
 ENTRYPOINT ["/srv/entrypoint.sh"]
