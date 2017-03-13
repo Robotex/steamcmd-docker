@@ -1,10 +1,10 @@
 #!/bin/sh
 
-if [ ! -d /srv/$GAME/serverfiles ]
+if [ ! -d /srv/srcds/serverfiles ]
 then
-    /usr/games/steamcmd +runscript /srv/$GAME/update.txt validate
+    /usr/games/steamcmd +runscript /srv/srcds/update.txt validate
 else
-    /usr/games/steamcmd +runscript /srv/$GAME/update.txt
+    /usr/games/steamcmd +runscript /srv/srcds/update.txt
 fi
 
-. /srv/$GAME/start.sh "$@"
+. /srv/srcds/start.sh "$@"
