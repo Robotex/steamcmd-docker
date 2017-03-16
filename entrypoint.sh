@@ -1,9 +1,7 @@
 #!/bin/sh
 
-if [ ! -d /srv/srcds/serverfiles ]
+if [ ! -f /srv/srcds/serverfiles/srcds_run ]
 then
-    /usr/games/steamcmd +runscript /srv/srcds/update.txt validate
-else
     /usr/games/steamcmd +runscript /srv/srcds/update.txt
 fi
 
