@@ -2,7 +2,11 @@
 
 if [ ! -f /srv/srcds/serverfiles/srcds_run ]
 then
-    /usr/games/steamcmd +runscript /srv/srcds/update.txt
+    while [ "${exitcode}" != "0" ]
+    do
+        /usr/games/steamcmd +runscript /srv/srcds/update.txt
+        exitcode=$?
+    done
 fi
 
 . /srv/srcds/start.sh
