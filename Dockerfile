@@ -3,6 +3,10 @@ FROM ubuntu:yakkety
 # Prevent some warnings
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Set entrypoint
+COPY entrypoint.sh /srv/entrypoint.sh
+ENTRYPOINT ["/srv/entrypoint.sh"]
+
 # Enable the multiverse source and install SteamCMD
 RUN sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list \
     && dpkg --add-architecture i386 \
@@ -10,18 +14,12 @@ RUN sed -i 's/^#\s*\(deb.*multiverse\)$/\1/g' /etc/apt/sources.list \
     && echo steamcmd steam/question select I AGREE | debconf-set-selections \
     && apt-get -y install ca-certificates steamcmd \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY entrypoint.sh /srv/entrypoint.sh
-
+    && rm -rf /var/lib/apt/lists/* \
 # Add new user and assign ownership of entrypoint script
-RUN adduser --disabled-password --gecos '' gameserver \
+    && adduser --disabled-password --gecos '' gameserver \
     && chown gameserver:gameserver /srv/entrypoint.sh \
-    && chmod +x /srv/entrypoint.sh
-
+    && chmod +x /srv/entrypoint.sh \
 # SteamInit crash fix
-RUN mkdir -pv /home/gameserver/.steam/sdk32/ \
+    && mkdir -pv /home/gameserver/.steam/sdk32/ \
     && ln -s /home/gameserver/.steam/steamcmd/linux32/steamclient.so /home/gameserver/.steam/sdk32/steamclient.so \
     && chown -R gameserver:gameserver /home/gameserver/.steam
-
-ENTRYPOINT ["/srv/entrypoint.sh"]
