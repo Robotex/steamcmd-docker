@@ -1,15 +1,15 @@
 #!/bin/sh
 
-if [ ! -f /srv/srcds/serverfiles/srcds_run ]
+if [ ! -f /usr/games/gameserver/serverfiles/srcds_run ]
 then
-    LOCKDIR="/srv/srcds/serverfiles"
+    LOCKDIR="/usr/games/gameserver/serverfiles"
     flock -xn $LOCKDIR
     if [ $? -eq 0 ]
     then
         echo "Master update..."
         while [ "${exitcode}" != "0" ]
         do
-            /usr/games/steamcmd +runscript /srv/srcds/update.txt
+            /usr/games/steamcmd +runscript /usr/games/gameserver/update.txt
             exitcode=$?
         done
     else
@@ -19,4 +19,4 @@ then
     flock -u 
 fi
 
-. /srv/srcds/start.sh
+. /usr/games/gameserver/start.sh
