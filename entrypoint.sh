@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LOCKFILE="/var/lock/`basename $0`"
+LOCKFILE="/srv/srcds/serverfiles"
 LOCKFD=99
 
 # PRIVATE
@@ -30,12 +30,14 @@ then
     exlock_now
     if [ $? -eq 0 ]
     then
+        echo "Master update..."
         while [ "${exitcode}" != "0" ]
         do
             /usr/games/steamcmd +runscript /srv/srcds/update.txt
             exitcode=$?
         done
     else
+        echo "Slave waiting..."
         exlock
     fi
     unlock
