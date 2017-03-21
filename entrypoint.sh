@@ -3,6 +3,9 @@
 if [ ! -f /home/gameserver/.steam/steamcmd/linux32/steamclient.so ]
 then
     /usr/games/steamcmd +login anonymous +quit
+# SteamInit crash fix
+    mkdir -pv ~/.steam/sdk32/
+    ln -s ~/.steam/steamcmd/linux32/steamclient.so ~/.steam/sdk32/steamclient.so
 fi
 
 if [ ! -f /usr/games/gameserver/serverfiles/srcds_run ]
